@@ -1,0 +1,7 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "academia-magica:lib"
+
+    - path: "./test"
+      component: "academia-magica:test:academia-magica-test"
