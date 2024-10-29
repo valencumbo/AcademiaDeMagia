@@ -37,6 +37,17 @@ efectoSectum salud | salud > 10 = 10
 obliviate :: Number -> EfectoHechizo
 obliviate olvidados mago = mago{hechizos = drop olvidados (hechizos mago)}
 
+poder :: Mago -> Int
+poder mago = salud mago + ((edad mago) * length(hechizos mago))
+
+daño :: Mago -> Hechizo -> Int
+daño mago hechizo | nombreHechizo hechizo == "lagrimaFenix"  = -(valor hechizo)
+                  | nombreHechizo hechizo == "obliviate" = 0
+                  | otherwise = valor hechizo
+
+diferenciaDePoder :: Mago -> Mago -> Int
+diferenciaDePoder mago otroMago = abs(poder mago - poder otroMago)
+
 potter = Mago{nombre = "Harry", edad = 20, salud = 100, hechizos = [lagrima]}
 weasley = Mago{nombre = "Ron", edad = 21, salud = 5, hechizos = [lagrima, sectum]}
 malfoy = Mago{nombre = "Draco", edad = 22, salud = 10, hechizos = [lagrima, sectum]}
