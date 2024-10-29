@@ -21,6 +21,9 @@ correrTests = hspec $ do
       obliviate 1 potter `shouldBe` Mago{nombre = "Harry", edad = 20, salud = 100, hechizos = []}
       obliviate 2 granger `shouldBe` Mago{nombre = "Hermione", edad = 21, salud = 70, hechizos = [obliviateHechizo]}
       obliviate 10 goyle `shouldBe` Mago{nombre = "Gregory", edad = 20, salud = 2, hechizos = []}
+    it "Mago afectado por confundus" $ do
+      confundus potter `shouldBe` Mago{nombre = "Harry", edad = 20, salud = 130, hechizos = [lagrima]}
+      confundus snape `shouldBe` Mago{nombre = "Severus", edad = 50, salud = 190, hechizos = [sectum, obliviateHechizo, lagrima, confundusHechizo]}
 
 
 

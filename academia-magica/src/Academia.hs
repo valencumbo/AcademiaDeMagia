@@ -37,6 +37,9 @@ efectoSectum salud | salud > 10 = 10
 obliviate :: Number -> EfectoHechizo
 obliviate olvidados mago = mago{hechizos = drop olvidados (hechizos mago)}
 
+confundus :: EfectoHechizo
+confundus mago = efecto (head (hechizos mago)) mago
+
 poder :: Mago -> Int
 poder mago = salud mago + ((edad mago) * length(hechizos mago))
 
@@ -53,7 +56,10 @@ weasley = Mago{nombre = "Ron", edad = 21, salud = 5, hechizos = [lagrima, sectum
 malfoy = Mago{nombre = "Draco", edad = 22, salud = 10, hechizos = [lagrima, sectum]}
 goyle = Mago{nombre = "Gregory", edad = 20, salud = 2, hechizos = []}
 granger = Mago{nombre = "Hermione", edad = 21, salud = 70, hechizos = [lagrima, sectum, obliviateHechizo]}
+snape = Mago{nombre = "Severus", edad = 50, salud = 200, hechizos = [sectum, obliviateHechizo, lagrima, confundusHechizo]}
+dumbledore = Mago{nombre = "Albus ", edad = 50, salud = 350, hechizos = [confundusHechizo, obliviateHechizo, lagrima, sectum]}
 
 lagrima = Hechizo{nombreHechizo = "lagrimaFenix", efecto = lagrimaFenix 30}
 sectum = Hechizo{nombreHechizo = "sectumSempra", efecto = sectumSempra}
 obliviateHechizo = Hechizo{nombreHechizo = "obliviate", efecto = obliviate 2}
+confundusHechizo = Hechizo{nombreHechizo = "confundus", efecto = confundus}
