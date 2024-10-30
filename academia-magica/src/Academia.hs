@@ -53,11 +53,18 @@ daño mago hechizo | saludMagoHechizado < salud mago = -(salud mago - saludMagoH
 diferenciaDePoder :: Mago -> Mago -> Number
 diferenciaDePoder mago otroMago = abs (poder mago - poder otroMago)
 
-type Academia = [Mago]
+type AcademiaMagica = [Mago]
 
-hogwarts = [potter , weasley , hadrid]
+hogwarts :: AcademiaMagica
+hogwarts = [potter, weasley, malfoy, goyle, granger, snape, dumbledore, crabbe, rubeus]
 
-sinHechizosHadrid :: Academia -> Bool
+koldovstoretz :: AcademiaMagica
+koldovstoretz = [bazarov, ibrahimova]
+
+beauxbatons :: AcademiaMagica
+beauxbatons = []
+
+sinHechizosHadrid :: AcademiaMagica -> Bool
 sinHechizosHadrid [] = False
 sinHechizosHadrid(x:xs) | nombre x == "Hadrid" && null (hechizos x) = True
                         | otherwise = sinHechizosHadrid xs
@@ -70,7 +77,10 @@ granger = Mago{nombre = "Hermione", edad = 21, salud = 70, hechizos = [lagrima, 
 snape = Mago{nombre = "Severus", edad = 50, salud = 200, hechizos = [sectum, obliviateHechizo, lagrima, confundusHechizo]}
 dumbledore = Mago{nombre = "Albus", edad = 50, salud = 350, hechizos = [confundusHechizo, obliviateHechizo, lagrima, sectum]}
 crabbe = Mago{nombre = "Vincent", edad = 9, salud = 6, hechizos = []}
-
+rubeus = Mago{nombre = "Hagrid", edad = 40, salud = 200, hechizos = [confundusHechizo, obliviateHechizo, lagrima, sectum]}
+bazarov = Mago{nombre = "Spartacus", edad = 45, salud = 120, hechizos = [confundusHechizo, lagrima, sectum]}  
+ibrahimova = Mago{nombre = "Stella", edad = 50, salud = 140, hechizos = [lagrima, sectum]}  
+ 
 lagrima = Hechizo{nombreHechizo = "lagrimaFenix", efecto = lagrimaFenix 30}
 sectum = Hechizo{nombreHechizo = "sectumSempra", efecto = sectumSempra}
 obliviateHechizo = Hechizo{nombreHechizo = "obliviate", efecto = obliviate 2}
