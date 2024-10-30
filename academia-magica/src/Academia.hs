@@ -53,6 +53,15 @@ daño mago hechizo | saludMagoHechizado < salud mago = -(salud mago - saludMagoH
 diferenciaDePoder :: Mago -> Mago -> Number
 diferenciaDePoder mago otroMago = abs (poder mago - poder otroMago)
 
+type Academia = [Mago]
+
+hogwarts = [potter , weasley , hadrid]
+
+sinHechizosHadrid :: Academia -> Bool
+sinHechizosHadrid [] = False
+sinHechizosHadrid(x:xs) | nombre x == "Hadrid" && null (hechizos x) = True
+                        | otherwise = sinHechizosHadrid xs
+
 potter = Mago{nombre = "Harry", edad = 20, salud = 100, hechizos = [lagrima]}
 weasley = Mago{nombre = "Ron", edad = 21, salud = 5, hechizos = [lagrima, sectum]}
 malfoy = Mago{nombre = "Draco", edad = 22, salud = 10, hechizos = [lagrima, sectum]}
