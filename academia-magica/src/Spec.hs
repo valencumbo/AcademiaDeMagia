@@ -4,6 +4,7 @@ import PdePreludat
 import Library
 import Academia
 import Test.Hspec
+import GHC.Windows (failIfFalse_)
 
 correrTests :: IO ()
 correrTests = hspec $ do
@@ -37,5 +38,12 @@ correrTests = hspec $ do
     it "Sin Daños al mago" $ do
       daño snape lagrima `shouldBe` 0
       daño dumbledore obliviateHechizo `shouldBe` 0
-
+    it "Mago sin hechizos" $ do
+      magoSinHechizos "Harry" hogwarts `shouldBe` False
+      magoSinHechizos "Spartacus" koldovstoretz `shouldBe` False
+      magoSinHechizos "Vincent" hogwarts `shouldBe` True
+    it "Hay algun mago llamado Hagrid sin hechizos" $ do
+      magoSinHechizos "Hagrid" hogwarts `shouldBe` True
+      magoSinHechizos "Hagrid" beauxbatons `shouldBe` False
+    
 

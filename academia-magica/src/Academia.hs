@@ -64,15 +64,13 @@ koldovstoretz = [bazarov, ibrahimova]
 beauxbatons :: AcademiaMagica
 beauxbatons = []
 
-sinHechizosHadrid :: AcademiaMagica -> Bool
-sinHechizosHadrid [] = False
-sinHechizosHadrid(mago:magos) | nombre mago == "Hadrid" && null (hechizos mago) = True
-                        | otherwise = sinHechizosHadrid magos
+magoSinHechizos :: String -> AcademiaMagica -> Bool
+magoSinHechizos nombreMago = any (\mago -> nombre mago == nombreMago && null(hechizos mago))
 
-viejosNonos :: Academia -> Bool
+viejosNonos :: AcademiaMagica -> Bool
 viejosNonos[] = True
-viejosNonos(mago:magos)  = (edad mago > 16) && esNono mago && viejosNonos magos      
-                  
+viejosNonos(mago:magos)  = (edad mago > 16) && esNono mago && viejosNonos magos
+
 esNono :: Mago -> Bool
 esNono mago = length (hechizos mago) > 3 * edad mago
 
@@ -97,7 +95,7 @@ obtenerMaximo lista [elemento] = elemento
 obtenerMaximo lista (primerElemento:segundoElemento:cola)| lista primerElemento >= lista segundoElemento = obtenerMaximo lista (primerElemento:cola)
                                                          | otherwise = obtenerMaximo lista (segundoElemento : cola)
 
-mejorOponente :: Mago -> Academia -> Mago
+mejorOponente :: Mago -> AcademiaMagica -> Mago
 mejorOponente mago  = obtenerMaximo (\oponente -> abs (poder oponente - poder mago))
 
 potter = Mago{nombre = "Harry", edad = 20, salud = 100, hechizos = [lagrima]}
@@ -108,10 +106,10 @@ granger = Mago{nombre = "Hermione", edad = 21, salud = 70, hechizos = [lagrima, 
 snape = Mago{nombre = "Severus", edad = 50, salud = 200, hechizos = [sectum, obliviateHechizo, lagrima, confundusHechizo]}
 dumbledore = Mago{nombre = "Albus", edad = 50, salud = 350, hechizos = [confundusHechizo, obliviateHechizo, lagrima, sectum]}
 crabbe = Mago{nombre = "Vincent", edad = 9, salud = 6, hechizos = []}
-rubeus = Mago{nombre = "Hagrid", edad = 40, salud = 200, hechizos = [confundusHechizo, obliviateHechizo, lagrima, sectum]}
-bazarov = Mago{nombre = "Spartacus", edad = 45, salud = 120, hechizos = [confundusHechizo, lagrima, sectum]}  
-ibrahimova = Mago{nombre = "Stella", edad = 50, salud = 140, hechizos = [lagrima, sectum]}  
- 
+rubeus = Mago{nombre = "Hagrid", edad = 40, salud = 200, hechizos = []}
+bazarov = Mago{nombre = "Spartacus", edad = 45, salud = 120, hechizos = [confundusHechizo, lagrima, sectum]}
+ibrahimova = Mago{nombre = "Stella", edad = 50, salud = 140, hechizos = [lagrima, sectum]}
+
 lagrima = Hechizo{nombreHechizo = "lagrimaFenix", efecto = lagrimaFenix 30}
 sectum = Hechizo{nombreHechizo = "sectumSempra", efecto = sectumSempra}
 obliviateHechizo = Hechizo{nombreHechizo = "obliviate", efecto = obliviate 2}
