@@ -54,8 +54,39 @@ hogwarts = [potter , weasley , hadrid]
 
 sinHechizosHadrid :: Academia -> Bool
 sinHechizosHadrid [] = False
-sinHechizosHadrid(x:xs) | nombre x == "Hadrid" && null (hechizos x) = True
-                        | otherwise = sinHechizosHadrid xs
+sinHechizosHadrid(mago:magos) | nombre mago == "Hadrid" && null (hechizos mago) = True
+                        | otherwise = sinHechizosHadrid magos
+
+viejosNonos :: Academia -> Bool
+viejosNonos[] = True
+viejosNonos(mago:magos)  = (edad mago > 16) && esNono mago && viejosNonos magos      
+                  
+esNono :: Mago -> Bool
+esNono mago = length (hechizos mago) > 3 * edad mago
+
+{-
+    Analizar la siguiente funcion:
+
+    f x [y] = y
+    f x (y1:y2:ys)
+        | x y1 >= x y2 = f x (y1:ys)
+        | otherwise = f x (y2 : ys)
+
+    Se trata de una funcion que recibe una lista y devuelve su maximo.
+    En el caso base con un solo elemento devuelve dicho elemento.
+    Si no va comparando los 2 primeros elementos de la lista,descarta el menor y de manera recursiva
+    recorre la lista hasta el final.
+
+ -}
+
+---Mejoro expresividad
+obtenerMaximo :: Ord a1 => (a2 -> a1) -> [a2] -> a2
+obtenerMaximo lista [elemento] = elemento
+obtenerMaximo lista (primerElemento:segundoElemento:cola)| lista primerElemento >= lista segundoElemento = obtenerMaximo lista (primerElemento:cola)
+                                                         | otherwise = obtenerMaximo lista (segundoElemento : cola)
+
+mejorOponente :: Mago -> Academia -> Mago
+mejorOponente mago  = obtenerMaximo (\oponente -> abs (poder oponente - poder mago))
 
 potter = Mago{nombre = "Harry", edad = 20, salud = 100, hechizos = [lagrima]}
 weasley = Mago{nombre = "Ron", edad = 21, salud = 5, hechizos = [lagrima, sectum]}
