@@ -15,7 +15,7 @@ correrTests = hspec $ do
       lagrimaFenix 0 potter `shouldBe` Mago{nombre = "Harry", edad = 20, salud = 100, hechizos = [lagrima]}
     it "Mago afectado por sectum" $ do
       sectumSempra potter `shouldBe` Mago{nombre = "Harry", edad = 20, salud = 90, hechizos = [lagrima]}
-      -- sectumSempra weasley `shouldBe` Mago{nombre = "Ron", edad = 21 , salud = 2.5, hechizos = [lagrima, sectum]}
+      sectumSempra weasley `shouldBe` Mago{nombre = "Ron", edad = 21 , salud = 3, hechizos = [lagrima, sectum]} -- por tipo de dato Number, la division redondea hacia arriba
       sectumSempra malfoy `shouldBe` Mago{nombre = "Draco", edad = 22 , salud = 5, hechizos = [lagrima, sectum]}
     it "Mago afectado por obliviate" $ do
       obliviate 1 potter `shouldBe` Mago{nombre = "Harry", edad = 20, salud = 100, hechizos = []}
@@ -24,6 +24,18 @@ correrTests = hspec $ do
     it "Mago afectado por confundus" $ do
       confundus potter `shouldBe` Mago{nombre = "Harry", edad = 20, salud = 130, hechizos = [lagrima]}
       confundus snape `shouldBe` Mago{nombre = "Severus", edad = 50, salud = 190, hechizos = [sectum, obliviateHechizo, lagrima, confundusHechizo]}
-
+      confundus dumbledore `shouldBe` Mago{nombre = "Albus", edad = 50, salud = 350, hechizos = [confundusHechizo, obliviateHechizo, lagrima, sectum]}
+    it "Poder del Mago" $ do
+      poder potter `shouldBe` 120
+      poder dumbledore `shouldBe` 550
+    it "Poder del Mago sin hechizos" $ do
+      poder crabbe `shouldBe` 6
+      poder goyle `shouldBe` 2
+    it "Daño producido al mago" $ do
+      daño granger sectum `shouldBe` -10
+      daño crabbe sectum `shouldBe` -3
+    it "Sin Daños al mago" $ do
+      daño snape lagrima `shouldBe` 0
+      daño dumbledore obliviateHechizo `shouldBe` 0
 
 
