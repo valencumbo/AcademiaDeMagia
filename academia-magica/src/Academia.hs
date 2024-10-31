@@ -67,12 +67,15 @@ beauxbatons = []
 magoSinHechizos :: String -> AcademiaMagica -> Bool
 magoSinHechizos nombreMago = any (\mago -> nombre mago == nombreMago && null(hechizos mago))
 
-viejosNonos :: AcademiaMagica -> Bool
-viejosNonos[] = True
-viejosNonos(mago:magos)  = (edad mago > 16) && esNono mago && viejosNonos magos
+magosViejos :: AcademiaMagica -> AcademiaMagica
+magosViejos = filter ((> 16) . edad)
 
-esNono :: Mago -> Bool
-esNono mago = length (hechizos mago) > 3 * edad mago
+esNionio :: Mago -> Bool
+esNionio mago = length (hechizos mago) > 3 * edad mago
+
+viejosNionios :: AcademiaMagica -> Bool
+viejosNionios[] = True
+viejosNionios academiaMagica  = all esNionio (magosViejos academiaMagica) 
 
 {-
     Analizar la siguiente funcion:
