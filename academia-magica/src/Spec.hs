@@ -38,6 +38,10 @@ correrTests = hspec $ do
     it "Sin Daños al mago" $ do
       daño snape lagrima `shouldBe` 0
       daño dumbledore obliviateHechizo `shouldBe` 0
+    it "Diferencia de poder entre magos" $ do
+      diferenciDePoder potter weasley `shouldBe` 73
+      diferenciDePoder snape dumbledore `shouldBe` 150
+      diferenciDePoder granger malfoy `shouldBe` 79
     it "Mago sin hechizos" $ do
       magoSinHechizos "Harry" hogwarts `shouldBe` False
       magoSinHechizos "Spartacus" koldovstoretz `shouldBe` False
@@ -45,9 +49,17 @@ correrTests = hspec $ do
     it "Hay algun mago llamado Hagrid sin hechizos" $ do
       magoSinHechizos "Hagrid" hogwarts `shouldBe` True
       magoSinHechizos "Hagrid" beauxbatons `shouldBe` False
-    it "Hechizo que más daño hace a un mago" $ do
+    it "Todos los magos viejos son nionios" $ do 
+      viejosNionios hogwarts `shouldBe` False 
+      viejosNionios koldovstoretz `shouldBe` False
+      viejosNionios beauxbatons `shouldBe` False
+    it "Hechizo mas efectivo contra otro mago" $ do
+      mejorHechizoContra potter malfoy `shouldBe` sectum
       mejorHechizoContra potter granger `shouldBe` sectum
       mejorHechizoContra weasley dumbledore `shouldBe` sectum
+    it "Mejor oponente para un mago dentro de una academia" $do
+      mejorOponente potter hogwarts `shouldBe` Mago{nombre = "Gregory", edad = 20, salud = 2, hechizos = []}
+      mejorOponente granger koldovstoretz `shouldBe` Mago {nombre = "Stella", edad = 50, salud = 140, hechizos = [lagrima, sectum]}
     it "Mago no puede ganar" $ do
       noPuedeGanarle crabbe potter `shouldBe` True
       noPuedeGanarle goyle snape `shouldBe` True

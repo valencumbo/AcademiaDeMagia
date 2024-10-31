@@ -67,12 +67,15 @@ beauxbatons = []
 magoSinHechizos :: String -> AcademiaMagica -> Bool
 magoSinHechizos nombreMago = any (\mago -> nombre mago == nombreMago && null(hechizos mago))
 
-viejosNonos :: AcademiaMagica -> Bool
-viejosNonos[] = True
-viejosNonos(mago:magos)  = (edad mago > 16) && esNono mago && viejosNonos magos
+magosViejos :: AcademiaMagica -> AcademiaMagica
+magosViejos = filter ((> 16) . edad)
 
-esNono :: Mago -> Bool
-esNono mago = length (hechizos mago) > 3 * edad mago
+esNionio :: Mago -> Bool
+esNionio mago = length (hechizos mago) > 3 * edad mago
+
+viejosNionios :: AcademiaMagica -> Bool
+viejosNionios[] = True
+viejosNionios academiaMagica  = all esNionio (magosViejos academiaMagica) 
 
 {-
     Analizar la siguiente funcion:
@@ -95,6 +98,9 @@ obtenerMaximo lista [elemento] = elemento
 obtenerMaximo lista (primerElemento:segundoElemento:cola)| lista primerElemento >= lista segundoElemento = obtenerMaximo lista (primerElemento:cola)
                                                          | otherwise = obtenerMaximo lista (segundoElemento : cola)
 
+mejorHechizoContra :: Mago -> Mago -> Hechizo
+mejorHechizoContra objetivo agresor = obtenerMaximo (\hechizo -> daño objetivo hechizo) (hechizos agresor)
+
 mejorOponente :: Mago -> AcademiaMagica -> Mago
 mejorOponente mago  = obtenerMaximo (\oponente -> abs (poder oponente - poder mago))
 
@@ -114,3 +120,8 @@ lagrima = Hechizo{nombreHechizo = "lagrimaFenix", efecto = lagrimaFenix 30}
 sectum = Hechizo{nombreHechizo = "sectumSempra", efecto = sectumSempra}
 obliviateHechizo = Hechizo{nombreHechizo = "obliviate", efecto = obliviate 2}
 confundusHechizo = Hechizo{nombreHechizo = "confundus", efecto = confundus}
+
+noPuedeGanarle :: Mago -> Mago -> Bool
+noPuedeGanarle mago oponente = all (\hechizo -> salud mago == salud (efecto hechizo mago)) (hechizos oponente)
+
+
