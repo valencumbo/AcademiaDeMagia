@@ -45,5 +45,13 @@ correrTests = hspec $ do
     it "Hay algun mago llamado Hagrid sin hechizos" $ do
       magoSinHechizos "Hagrid" hogwarts `shouldBe` True
       magoSinHechizos "Hagrid" beauxbatons `shouldBe` False
-    
+    it "Hechizo que más daño hace a un mago" $ do
+      mejorHechizoContra potter granger `shouldBe` sectum
+      mejorHechizoContra weasley dumbledore `shouldBe` sectum
+    it "Mago no puede ganar" $ do
+      noPuedeGanarle crabbe potter `shouldBe` True
+      noPuedeGanarle goyle snape `shouldBe` True
+    it "Mago si puede ganar" $ do -- Casos donde noPuedeGanarle deberia dar ´False´
+      noPuedeGanarle granger weasley `shouldBe` False
+      noPuedeGanarle dumbledore snape `shouldBe` False
 
